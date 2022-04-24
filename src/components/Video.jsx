@@ -1,8 +1,21 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { useState } from 'react';
+import { Container, Form } from 'react-bootstrap'
 import { Player } from 'video-react';
+import { InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 function Video() {
+
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState('')
+  const [toggleComments, setToggleComments] = useState(true)
+
+  function addComment(comment){
+    setComments([...comments, comment])
+    setNewComment('')
+  }
 
   const videos = [
     {
@@ -59,6 +72,23 @@ function Video() {
     <Player>
       <source src="http://localhost:3000/videos/sample.mp4" />
     </Player>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <Form>
+      <Form.Check 
+        type="switch"
+        id="custom-switch"
+        checked={toggleComments}
+        onChange={() => setToggleComments(!toggleComments)}
+        label="Toggle Comments"
+      />
+    </Form></div>
+    <InputGroup><FormControl value={newComment} className="m-3" as="textarea" aria-label="With textarea" placeholder="Write your comment here!" onChange={(e) => setNewComment(e.target.value)}/></InputGroup>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <Button onClick={() => addComment(newComment)}>Add!</Button>
+    </div>
+    {toggleComments && comments.map(item => (
+      <p>{item}</p>
+    ))}
     </Container>
   )
 }
