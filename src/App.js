@@ -4,6 +4,7 @@ import ProtectedRoute from './ProtectedRoutes';
 import Login from './components/Login'
 import Overview from './components/Overview'
 import Video from './components/Video'
+import NavBar from './components/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route element={<ProtectedRoute />}>
